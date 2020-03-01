@@ -221,5 +221,5 @@ end
 
 
 --
-SELECT  NOME_DIA_SEMANA, ANO from DIM_DATA
+SELECT  * from DIM_DATA
 where dia = 21 and mes = 7
