@@ -20,7 +20,7 @@ create table auditoria_salario (
 matricula varchar(30) not null,
 sal_antes decimal(10,2)  not null,
 sal_depois decimal(10,2)  not null,
-usuario varchar(20) not null,
+usuario varchar(100) not null,
 data_atualizacao datetime not null
 );
 
