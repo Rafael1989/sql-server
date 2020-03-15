@@ -273,20 +273,55 @@ EXERCÍCIO 12
 Adicione o campo valor_total tipo decimal(10,2) na tabela venda.
 */
 
+ALTER TABLE VENDAS ADD VALOR_TOTAL DECIMAL(10,2)
+
 /*
 EXERCÍCIO 13
 Atualize o campo valor_tota da tabela venda, com a soma dos produtos das respectivas vendas.
 */
+
+UPDATE VENDAS SET VALOR_TOTAL = (SELECT SUM(VAL_TOTAL) FROM VENDA_ITENS A WHERE VENDAS.NUM_VENDA=A.NUM_VENDA)
 
 /*
 EXERCÍCIO 14
 Realize a conferencia do exercício anterior, certifique-se que o valor  total de cada venda e igual ao valor total da soma dos  produtos da venda, listar as vendas em que ocorrer diferença.
 */
 
+SELECT 
+	A.NUM_VENDA, 
+	A.VALOR_TOTAL, 
+	SUM(B.VAL_TOTAL)TOTAL_ITENS
+FROM 
+	VENDAS A
+INNER JOIN
+	VENDA_ITENS B
+ON 
+	A.NUM_VENDA=B.NUM_VENDA
+GROUP BY
+	A.NUM_VENDA, A.VALOR_TOTAL
+HAVING
+	A.VALOR_TOTAL<>SUM(B.VAL_TOTAL)
+
+
+
 /*
 EXERCÍCIO 15
 Listar o número de produtos existentes, valor total , média do valor unitário referente ao mês 07/2018 agrupado por venda.
 */
+
+SELECT
+	A.NUM_VENDA,
+	
+	COUNT(B.NUM_SEQ) QTD_SKU,
+	SUM(B.QTDE) QTDE,
+	AVG(B.VAL_UNIT) MEDIA_UNIT,
+	A.VALOR_TOTAL
+FROM VENDAS A
+INNER JOIN VENDA_ITENS B
+ON A.NUM_VENDA=B.NUM_VENDA
+WHERE MONTH(A.DATA_VENDA)=7
+AND YEAR(A.DATA_VENDA)=2018
+GROUP BY A.NUM_VENDA, A.VALOR_TOTAL
 
 /*
 EXERCÍCIO 16
