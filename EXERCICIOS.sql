@@ -124,13 +124,38 @@ EXERCÍCIO 3
 Liste todos os clientes com seus nomes e com suas respectivas cidade e estados
 */
 
-
+SELECT 
+	A.NOME_CLIENTE, 
+	B.NOME_CIDADE, 
+	B.UF 
+FROM 
+	CLIENTE A 
+LEFT JOIN 
+	CIDADE B
+ON 
+	A.ID_CIDADE = B.ID_CIDADE
   
 /*
 EXERCÍCIO 4 
 Liste o código do produto, descrição do produto e descrição das categorias dos produtos que tenham o valor unitário na 
 faixa de R$ 10,00 a R$ 1500
 */
+
+SELECT 
+	A.ID_PROD, 
+	A.NOME_PRODUTO,
+	B.NOME_CATEGORIA
+FROM
+	PRODUTOS A
+LEFT JOIN 
+	CATEGORIA B
+ON
+	A.ID_CATEGORIA = B.ID_CATEGORIA
+WHERE
+	A.PRECO BETWEEN 10 AND 1500
+--	A.PRECO >= 10
+--AND
+--	A.PRECO <= 1500
 
 /*
 EXERCÍCIO 5 
@@ -140,6 +165,21 @@ Com os seguintes critérios
 •	preço  >= 500 e <=1000 valor da coluna será igual  "preço entre 500 e 1000"
 •	preço  > 1000 : valor da coluna será igual  "preço acima de 1000".
 */
+
+SELECT 
+	A.ID_PROD,
+	A.NOME_PRODUTO,
+	B.NOME_CATEGORIA,
+	CASE 
+		WHEN A.PRECO < 500 THEN 'PREÇO ABAIXO DE 500'
+		WHEN A.PRECO >= 500 AND A.PRECO <= 1000 THEN 'PREÇO ENTRE 500 E 1000'
+		WHEN A.PRECO > 1000 THEN 'PREÇO ACIMA DE 1000' END 'FAIXA DE PREÇO'
+FROM
+	PRODUTOS A
+LEFT JOIN
+	CATEGORIA B
+ON
+	A.ID_CATEGORIA = B.ID_CATEGORIA
 
 /*
 EXERCÍCIO  6
