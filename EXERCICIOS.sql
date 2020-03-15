@@ -219,7 +219,7 @@ Listar em ordem alfabética os vendedores e seus respectivos salários, mais uma c
 
 SELECT 
 	NOME_VENDEDOR,
-	SALARIO,
+	SALARIO AS 'SALÁRIO ATUAL',
 	SALARIO*1.12 AUMENTO
 FROM
 	VENDEDORES
