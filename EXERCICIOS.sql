@@ -186,6 +186,11 @@ EXERCÍCIO  6
 Adicione a coluna faixa_salario na tabela vendedor tipo char(1)
 */
 
+ALTER TABLE 
+	VENDEDORES 
+ADD 
+	faixa_salario char(1)
+
 /*
 EXERCÍCIO 7 
 Atualize o valor do campo faixa_salario da tabela vendedor com um update condicional .
@@ -197,11 +202,30 @@ Com os seguintes critérios
 **VERIFIQUE SE OS VALORES FORAM ATUALIZADOS CORRETAMENTE
 */
 
+UPDATE 
+	VENDEDORES 
+SET 
+	faixa_salario = 
+		CASE 
+			WHEN SALARIO < 1000 THEN 'c'
+			WHEN SALARIO BETWEEN 1000 AND 2000 THEN 'b'
+			WHEN SALARIO >= 2000 THEN 'a'END
+
+
 /*
 EXERCÍCIO 8
 Listar em ordem alfabética os vendedores e seus respectivos salários, mais uma coluna, simulando aumento de 12% em seus salários.
 */
 
+SELECT 
+	NOME_VENDEDOR,
+	SALARIO,
+	SALARIO*1.12 AUMENTO
+FROM
+	VENDEDORES
+ORDER BY 
+	NOME_VENDEDOR
+	
 
 /*EXERCÍCIO 9
 Listar os nome dos vendedores, salário atual , coluna calculada com salario novo + reajuste de 18% sobre o salário atual, calcular  a coluna acréscimo e calcula uma coluna salario novo+ acresc.
