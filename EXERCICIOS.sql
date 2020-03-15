@@ -189,7 +189,7 @@ Adicione a coluna faixa_salario na tabela vendedor tipo char(1)
 ALTER TABLE 
 	VENDEDORES 
 ADD 
-	faixa_salario char(1)
+	FAIXA_SALARIO char(1)
 
 /*
 EXERCÍCIO 7 
@@ -205,11 +205,11 @@ Com os seguintes critérios
 UPDATE 
 	VENDEDORES 
 SET 
-	faixa_salario = 
+	FAIXA_SALARIO = 
 		CASE 
-			WHEN SALARIO < 1000 THEN 'c'
-			WHEN SALARIO BETWEEN 1000 AND 2000 THEN 'b'
-			WHEN SALARIO >= 2000 THEN 'a'END
+			WHEN SALARIO < 1000 THEN 'C'
+			WHEN SALARIO BETWEEN 1000 AND 2000 THEN 'B'
+			WHEN SALARIO >= 2000 THEN 'A'END
 
 
 /*
@@ -228,20 +228,46 @@ ORDER BY
 	
 
 /*EXERCÍCIO 9
-Listar os nome dos vendedores, salário atual , coluna calculada com salario novo + reajuste de 18% sobre o salário atual, calcular  a coluna acréscimo e calcula uma coluna salario novo+ acresc.
+Listar os nome dos vendedores, salário atual , coluna calculada com salario novo + reajuste de 18% sobre o salário atual, calcular  a 
+coluna acréscimo e calcula uma coluna salario novo+ acresc.
 Critérios
 Se o vendedor for  da faixa “C”, aplicar  R$ 120 de acréscimo , outras faixas de salario acréscimo igual a 0(Zero )
 */
+
+DECLARE @ACRES DECIMAL(10,2)=120;
+DECLARE @PCT_AUMENTO DECIMAL(10,2)=0.18
+
+SELECT
+	NOME_VENDEDOR,
+	FAIXA_SALARIO,
+	SALARIO AS SALARIO_ATUAL,
+	SALARIO*(1+@PCT_AUMENTO) AS SALARIO_NOVO,
+	CASE WHEN FAIXA_SALARIO = 'C' THEN @ACRES ELSE 0 END ACRESC,
+	CASE WHEN FAIXA_SALARIO = 'C' THEN @ACRES+SALARIO*(1+@PCT_AUMENTO) ELSE SALARIO*(1+@PCT_AUMENTO) END SALARIO_NOVO_ACRES
+FROM
+	VENDEDORES
+ORDER BY 4 DESC
 
 /*
 EXERCÍCIO 10
 Listar o nome e salários do vendedor com menor salario.
 */
 
+SELECT TOP 1
+	NOME_VENDEDOR,
+	SALARIO
+FROM
+	VENDEDORES
+ORDER BY SALARIO ASC
+
+
 /*
 EXERCÍCIO 11
 Quantos vendedores ganham acima de R$ 2.000,00 de salário fixo?
 */
+
+SELECT COUNT(*) QTD FROM VENDEDORES WHERE SALARIO > 2000
+
 /*
 EXERCÍCIO 12
 Adicione o campo valor_total tipo decimal(10,2) na tabela venda.
